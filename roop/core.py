@@ -190,8 +190,9 @@ def start() -> None:
             update_status('Restoring audio might cause issues as fps are not kept...')
         restore_audio(roop.globals.target_path, roop.globals.output_path)
     # clean temp
-    update_status('Cleaning temporary resources...')
-    clean_temp(roop.globals.target_path)
+    #arthur remove clean_temp
+    #update_status('Cleaning temporary resources...')
+    #clean_temp(roop.globals.target_path)
     # validate video
     if is_video(roop.globals.target_path):
         update_status('Processing to video succeed!')
