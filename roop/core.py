@@ -71,6 +71,7 @@ def parse_args() -> None:
     roop.globals.execution_providers = decode_execution_providers(args.execution_provider)
     roop.globals.execution_threads = args.execution_threads
     print("available providers",roop.globals.execution_providers)
+    print("onnx providers",onnxruntime.get_available_providers())
 
 
 def encode_execution_providers(execution_providers: List[str]) -> List[str]:
