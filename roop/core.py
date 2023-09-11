@@ -25,6 +25,31 @@ from roop.utilities import has_image_extension, is_image, is_video, detect_fps, 
 warnings.filterwarnings('ignore', category=FutureWarning, module='insightface')
 warnings.filterwarnings('ignore', category=UserWarning, module='torchvision')
 
+def make_args(video_path, face_path, out_path) -> None:
+    signal.signal(signal.SIGINT, lambda signal_number, frame: destroy())
+    
+    roop.globals.source_path = video_path    # args.source_path
+    roop.globals.target_path = face_path    # args.target_path
+    roop.globals.output_path = normalize_output_path(roop.globals.source_path, roop.globals.target_path, out_path) #args.output_path)
+    roop.globals.headless = roop.globals.source_path is not None and roop.globals.target_path is not None and roop.globals.output_path is not None
+    #roop.globals.frame_processors = args.frame_processor
+    #roop.globals.keep_fps = args.keep_fps
+    #roop.globals.keep_frames = args.keep_frames
+    #roop.globals.skip_audio = args.skip_audio
+    #roop.globals.many_faces = args.many_faces
+    #roop.globals.reference_face_position = args.reference_face_position
+    #roop.globals.reference_frame_number = args.reference_frame_number
+    #roop.globals.similar_face_distance = args.similar_face_distance
+    #roop.globals.temp_frame_format = args.temp_frame_format
+    #roop.globals.temp_frame_quality = args.temp_frame_quality
+    #roop.globals.output_video_encoder = args.output_video_encoder
+    #roop.globals.output_video_quality = args.output_video_quality
+    #roop.globals.max_memory = args.max_memory
+    #roop.globals.execution_providers = decode_execution_providers(args.execution_provider)
+    #roop.globals.execution_threads = args.execution_threads
+    print("available providers",roop.globals.execution_providers)
+    print("onnx providers",onnxruntime.get_available_providers())
+
 
 def parse_args() -> None:
     signal.signal(signal.SIGINT, lambda signal_number, frame: destroy())
@@ -207,6 +232,18 @@ def destroy() -> None:
         clean_temp(roop.globals.target_path)
     sys.exit()
 
+def task(video_path, face_path) -> None:
+    #parse_args()
+    make_args(video_path, face_path, 'output.mp4')
+    if not pre_check():
+        return
+    for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
+        if not frame_processor.pre_check():
+            return
+    limit_resources()
+    
+    start()
+    
 
 def run() -> None:
     parse_args()

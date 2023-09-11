@@ -1,0 +1,35 @@
+<!doctype html>
+<script>
+    function onClick() {
+        alert("Hello World")
+    }
+</script>
+<title>Python Flask - Video Upload and Play Example</title>
+<h2>Select a video to upload and play</h2>
+<p>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
+{% if filename %}
+	<div style="margin: 10px auto;">
+		<video autoplay="autoplay" controls="controls" preload="preload">
+			<source src="{{ url_for('display_video', filename=filename) }}" type="video/mp4"></source>
+		</video>
+	</div>
+{% endif %}
+<form method="post" action="/" enctype="multipart/form-data">
+    <dl>
+		<p>Viode<input type="file" name="video" autocomplete="off" required></p>
+        <p>Face<input type="file" name="face" autocomplete="off" required></p>
+    </dl>
+    <p>
+		<input type="submit" value="Upload">
+	</p>
+</form>

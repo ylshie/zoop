@@ -2,3 +2,6 @@
 */__pycache__/
 roop/processors/__pycache__/
 roop/processors/frame/__pycache__/
+__pycache__/
+*.mp4
+.DS_Store
