@@ -159,6 +159,7 @@ def update_status(message: str, scope: str = 'ROOP.CORE') -> None:
 
 
 def start() -> None:
+    print("---- start ---------")
     for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
         if not frame_processor.pre_start():
             return
@@ -248,8 +249,11 @@ def task(video_path, face_path, out_path) -> None:
     
     #start()
     multiprocessing.set_start_method('spawn')
+    print("------- allocate process --------")
     p = multiprocessing.Process(target=start, args=())
+    print("------- start processs --------")
     p.start()
+    p.join()
     
 
 def run() -> None:
