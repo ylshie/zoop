@@ -40,7 +40,7 @@ def upload_video():
 		p = multiprocessing.Process(target=task, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
 		print("------- start processs --------")
 		p.start()
-		p.join()
+		#p.join()
 		return render_template('upload.html', filename=outpath)
 
 @app.route('/display/<filename>')
