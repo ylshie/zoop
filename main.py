@@ -4,7 +4,8 @@ import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 from roop.core import task
-	
+import multiprocessing
+
 @app.route('/')
 def upload_form():
 	return render_template('upload.html')
@@ -31,9 +32,15 @@ def upload_video():
 		video.save(os.path.join(app.config['UPLOAD_FOLDER'], videopath))
 		#print('upload_video filename: ' + filename)
 		flash('Video successfully uploaded and displayed below')
-		task(os.path.join(app.config['UPLOAD_FOLDER'], videopath), 
-	         os.path.join(app.config['UPLOAD_FOLDER'], imagepath),
-			 os.path.join(app.config['UPLOAD_FOLDER'], outpath))
+		#task(os.path.join(app.config['UPLOAD_FOLDER'], videopath),
+        #     os.path.join(app.config['UPLOAD_FOLDER'], imagepath),
+        #    os.path.join(app.config['UPLOAD_FOLDER'], outpath))
+		multiprocessing.set_start_method('spawn')
+		print("------- allocate process --------")
+		p = multiprocessing.Process(target=start, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
+		print("------- start processs --------")
+		p.start()
+		p.join()
 		return render_template('upload.html', filename=outpath)
 
 @app.route('/display/<filename>')
