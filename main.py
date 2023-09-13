@@ -37,7 +37,7 @@ def upload_video():
         #    os.path.join(app.config['UPLOAD_FOLDER'], outpath))
 		multiprocessing.set_start_method('spawn')
 		print("------- allocate process --------")
-		p = multiprocessing.Process(target=start, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
+		p = multiprocessing.Process(target=task, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
 		print("------- start processs --------")
 		p.start()
 		p.join()
