@@ -26,13 +26,15 @@ def upload_video():
 	else:
 		imagepath = secure_filename(image.filename)
 		videopath = secure_filename(video.filename)
+		outpath = secure_filename("output,mp4")
 		image.save(os.path.join(app.config['UPLOAD_FOLDER'], imagepath))
 		video.save(os.path.join(app.config['UPLOAD_FOLDER'], videopath))
 		#print('upload_video filename: ' + filename)
 		flash('Video successfully uploaded and displayed below')
 		task(os.path.join(app.config['UPLOAD_FOLDER'], videopath), 
-	         os.path.join(app.config['UPLOAD_FOLDER'], imagepath))
-		return render_template('upload.html', filename=videopath)
+	         os.path.join(app.config['UPLOAD_FOLDER'], imagepath),
+			 os.path.join(app.config['UPLOAD_FOLDER'], outpath))
+		return render_template('upload.html', filename=outpath)
 
 @app.route('/display/<filename>')
 def display_video(filename):
@@ -40,5 +42,5 @@ def display_video(filename):
 	return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
 	
