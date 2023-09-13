@@ -237,6 +237,7 @@ def destroy() -> None:
 
 def task(video_path, face_path, out_path) -> None:
     #parse_args()
+    print("------make----args------")
     make_args(video_path, face_path, out_path)
     if not pre_check():
         return
@@ -246,6 +247,7 @@ def task(video_path, face_path, out_path) -> None:
     limit_resources()
     
     #start()
+    multiprocessing.set_start_method('spawn')
     p = multiprocessing.Process(target=start, args=())
     p.start()
     
