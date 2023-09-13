@@ -2,7 +2,7 @@
 
 import os
 import sys
-import multiprocessing 
+#import multiprocessing 
 # single thread doubles cuda performance - needs to be set before torch import
 if any(arg.startswith('--execution-provider') for arg in sys.argv):
     os.environ['OMP_NUM_THREADS'] = '1'
@@ -247,13 +247,13 @@ def task(video_path, face_path, out_path) -> None:
             return
     limit_resources()
     
-    #start()
-    multiprocessing.set_start_method('spawn')
-    print("------- allocate process --------")
-    p = multiprocessing.Process(target=start, args=())
-    print("------- start processs --------")
-    p.start()
-    p.join()
+    start()
+    #multiprocessing.set_start_method('spawn')
+    #print("------- allocate process --------")
+    #p = multiprocessing.Process(target=start, args=())
+    #print("------- start processs --------")
+    #p.start()
+    #p.join()
     
 
 def run() -> None:
