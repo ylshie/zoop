@@ -248,12 +248,6 @@ def task(video_path, face_path, out_path) -> None:
     limit_resources()
     
     start()
-    #multiprocessing.set_start_method('spawn')
-    #print("------- allocate process --------")
-    #p = multiprocessing.Process(target=start, args=())
-    #print("------- start processs --------")
-    #p.start()
-    #p.join()
     
 
 def run() -> None:
