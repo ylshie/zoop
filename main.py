@@ -10,9 +10,10 @@ from flask import jsonify
 
 cors1 = CORS(app, resources={r"/*": {"origins": "*"}})
 print("------- set cors --------")
-multiprocessing.set_start_method('spawn')
-print("------- set start method --------")
+#multiprocessing.set_start_method('spawn')
+#print("------- set start method --------")
 
+set_method = False
 @app.route('/api/generate', methods=['POST'])
 def generate():
 	print('generate', request.files)
@@ -38,7 +39,10 @@ def generate():
 		video.save(os.path.join(app.config['UPLOAD_FOLDER'], videopath))
 		#print('upload_video filename: ' + filename)
 		flash('Video successfully uploaded and displayed below')
-		#multiprocessing.set_start_method('spawn')
+		if set_method == False:
+			multiprocessing.set_start_method('spawn')
+			print("------- set start method --------")
+			set_method = True
 		print("------- allocate process --------")
 		p = multiprocessing.Process(target=task, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
 		print("------- start processs --------")
