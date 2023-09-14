@@ -65,7 +65,7 @@ def generate():
 		#print("------- start processs --------")
 		#p.start()
 		if spawn:
-			p = Process(target=loop, args=(q) )
+			p = Process(target=loop, args=(q,) )
 			print("------- start processs --------")
 			p.start()
 		d = {'queue': q.qsize(),'filename': outpath}
