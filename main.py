@@ -49,10 +49,26 @@ def generate():
 			print("------- set start method --------")
 			roop.globals.set_method = True
 		print("------- allocate process --------")
-		p = multiprocessing.Process(target=task, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
-		print("------- start processs --------")
-		p.start()
-		d = {'filename': outpath}
+		data = {
+			'video': os.path.join(app.config['UPLOAD_FOLDER'], videopath),
+			'face': os.path.join(app.config['UPLOAD_FOLDER'], imagepath),
+			'output': os.path.join(app.config['UPLOAD_FOLDER'], outpath)
+		}
+		spawn = False
+		if roop.globals.queue == None:
+			roop.globals.queue = Queue()
+			spawn = True
+
+		q = roop.globals.queue
+		q.put(data)
+		#p = multiprocessing.Process(target=task, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
+		#print("------- start processs --------")
+		#p.start()
+		if spawn:
+			p = Process(target=loop, args=(q) )
+			print("------- start processs --------")
+			p.start()
+		d = {'queue': q.qsize(),'filename': outpath}
 		return jsonify(d)
 		#p.join()
 		#return render_template('upload.html', filename=outpath)
