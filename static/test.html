@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
     <script>
+        const display  = 'https://jtddvl9ueqykpw-5000.proxy.runpod.net/display/'
         function onClick() {
             const url  = 'https://jtddvl9ueqykpw-5000.proxy.runpod.net/api/generate';
             const form = document.querySelector('#form');
@@ -15,6 +16,23 @@
                 console.log("res",res)
                 const json = await res.json()
                 console.log("json",json)
+                function monitor () {
+                    fetch(display+json.filename,{ method: "HEAD", mode: 'cors' })
+                    .then((res) => {
+                        if (res.ok) {
+                            const video = document.querySelector('#video');
+                            video.src = display+json.filename;
+                        } else {
+                            // file is not present at URL
+                            setTimeout(monitor, 3000);
+                        }
+                    })
+                    .catch(() => {
+                        // probably server error; retry in 3 seconds
+                        setTimeout(monitor, 3000);
+                    });
+                }
+                monitor()
             }).catch(err => {
                 console.log(err)
             });
@@ -32,5 +50,7 @@
                 <input type="button" onclick="onClick()" value="Submit">
             </p>
         </form>
+        <video id="video" autoplay="autoplay" controls="controls" preload="preload">
+		</video>
     </body>
 </html>

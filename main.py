@@ -8,7 +8,7 @@ import multiprocessing
 from flask_cors import CORS
 from flask import jsonify
 
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+cors1 = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/api/generate', methods=['POST'])
 def generate():
