@@ -14,14 +14,17 @@ def generate():
 	print('generate', request.files)
 	if 'video' not in request.files or 'face' not in request.files:
 		flash('No file part')
+		print('No file part')
 		return redirect(request.url)
 	video = request.files['video']
 	image = request.files['face']
 	if video.filename == '':
 		flash('No image selected for uploading')
+		print('No image selected for uploading')
 		return redirect(request.url)
 	elif image.filename == '':
 		flash('No video selected for uploading')
+		print('No video selected for uploading')
 		return redirect(request.url)
 	else:
 		imagepath = secure_filename(image.filename)

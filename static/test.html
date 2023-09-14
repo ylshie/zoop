@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+    <script>
+        function onClick() {
+            const url  = 'https://jtddvl9ueqykpw-5000.proxy.runpod.net/api/generate';
+            const data = new URLSearchParams();
+            const form = document.querySelector('#form');
+            for (const pair of new FormData(form)) {
+                console.log(pair);
+                data.append(pair[0], pair[1]);
+            }
+
+            fetch(url, {
+                method: 'post',
+                body: data,
+            })
+            .then(res => console.log(res))
+            //.then(res => res.json())
+        }
+    </script>
+    <body>
+        <title>Python Flask - Video Upload and Play Example</title>
+        <h2>Select a video to upload and play</h2>
+        <form id="form" method="post" enctype="multipart/form-data">
+            <dl>
+                <p>Video<input type="file" name="video" autocomplete="off" required></p>
+                <p> Face<input type="file" name="face"  autocomplete="off" required></p>
+            </dl>
+            <p>
+                <input type="button" onclick="onClick()" value="Submit">
+            </p>
+        </form>
+    </body>
+</html>
