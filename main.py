@@ -37,7 +37,9 @@ def generate():
 	else:
 		imagepath = secure_filename(image.filename)
 		videopath = secure_filename(video.filename)
-		outpath = secure_filename("output.mp4")
+		id = uuid.uuid1()
+		outpath = secure_filename(str(id) + ".mp4")
+		#outpath = secure_filename("output.mp4")
 		image.save(os.path.join(app.config['UPLOAD_FOLDER'], imagepath))
 		video.save(os.path.join(app.config['UPLOAD_FOLDER'], videopath))
 		#print('upload_video filename: ' + filename)
