@@ -9,6 +9,7 @@ from multiprocessing import Process, Queue
 from flask_cors import CORS
 from flask import jsonify
 import roop.globals
+import uuid
 
 cors1 = CORS(app, resources={r"/*": {"origins": "*"}})
 print("------- set cors --------")
@@ -75,7 +76,8 @@ def upload_video():
 	else:
 		imagepath = secure_filename(image.filename)
 		videopath = secure_filename(video.filename)
-		outpath = secure_filename("output.mp4")
+		id = uuid.uuid1()
+		outpath = secure_filename(str(id) + ".mp4")
 		image.save(os.path.join(app.config['UPLOAD_FOLDER'], imagepath))
 		video.save(os.path.join(app.config['UPLOAD_FOLDER'], videopath))
 		#print('upload_video filename: ' + filename)
