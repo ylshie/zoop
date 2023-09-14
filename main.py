@@ -119,7 +119,7 @@ def upload_video():
 		q.put(data)
 		#p = Process(target=task, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
 		if spawn:
-			p = Process(target=loop, args=(q) )
+			p = Process(target=loop, args=(q,) )
 			print("------- start processs --------")
 			p.start()
 		#p.join()
