@@ -128,7 +128,11 @@ def upload_video():
 def loop(q):
 	while True:
 		data = q.get()
-		task(data['video'], data['face'], data['output'])
+		#task(data['video'], data['face'], data['output'])
+		pp = Process(target=task, args=(data['video'], data['face'], data['output']) )
+		print("------- start sub processs --------")
+		pp.start()
+		pp.join()
 
 @app.route('/display/<filename>')
 def display_video(filename):
