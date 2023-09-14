@@ -13,8 +13,11 @@
             fetch(url, {
                 method: 'post',
                 body: data,
+                mode: 'cors',
+                headers: { 'Content-Type': 'multipart/form-data' },
             })
             .then(res => console.log(res))
+            .catch(err => console.log(err));
             //.then(res => res.json())
         }
     </script>
