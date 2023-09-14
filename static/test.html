@@ -3,22 +3,21 @@
     <script>
         function onClick() {
             const url  = 'https://jtddvl9ueqykpw-5000.proxy.runpod.net/api/generate';
-            const data = new URLSearchParams();
             const form = document.querySelector('#form');
-            for (const pair of new FormData(form)) {
-                console.log(pair);
-                data.append(pair[0], pair[1]);
-            }
-
+            const data = new FormData(form);
+            
             fetch(url, {
-                method: 'post',
+                method: 'POST',
                 body: data,
                 mode: 'cors',
-                headers: { 'Content-Type': 'multipart/form-data' },
             })
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-            //.then(res => res.json())
+            .then(async res => {
+                console.log("res",res)
+                const json = await res.json()
+                console.log("json",json)
+            }).catch(err => {
+                console.log(err)
+            });
         }
     </script>
     <body>

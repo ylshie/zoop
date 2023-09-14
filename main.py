@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from roop.core import task
 import multiprocessing
 from flask_cors import CORS
+from flask import jsonify
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -39,8 +40,10 @@ def generate():
 		p = multiprocessing.Process(target=task, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
 		print("------- start processs --------")
 		p.start()
+		d = {'filename': outpath}
+		return jsonify(d)
 		#p.join()
-		return render_template('upload.html', filename=outpath)
+		#return render_template('upload.html', filename=outpath)
 
 @app.route('/')
 def upload_form():
