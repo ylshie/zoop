@@ -21,3 +21,4 @@ execution_providers: List[str] = []
 execution_threads: Optional[int] = None
 log_level: str = 'error'
 set_method: Optional[bool] = False
+queue: Optional[object] = None
