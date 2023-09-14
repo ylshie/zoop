@@ -7,13 +7,14 @@ from roop.core import task
 import multiprocessing
 from flask_cors import CORS
 from flask import jsonify
+import roop.globals
 
 cors1 = CORS(app, resources={r"/*": {"origins": "*"}})
 print("------- set cors --------")
 #multiprocessing.set_start_method('spawn')
 #print("------- set start method --------")
 
-globals.set_method = False
+roop.globals.set_method = False
 @app.route('/api/generate', methods=['POST'])
 def generate():
 	print('generate', request.files)
@@ -39,10 +40,10 @@ def generate():
 		video.save(os.path.join(app.config['UPLOAD_FOLDER'], videopath))
 		#print('upload_video filename: ' + filename)
 		flash('Video successfully uploaded and displayed below')
-		if globals.set_method == False:
+		if roop.globals.set_method == False:
 			multiprocessing.set_start_method('spawn')
 			print("------- set start method --------")
-			globals.set_method = True
+			roop.globals.set_method = True
 		print("------- allocate process --------")
 		p = multiprocessing.Process(target=task, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
 		print("------- start processs --------")
