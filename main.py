@@ -5,6 +5,39 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 from roop.core import task
 import multiprocessing
+from flask_cors import CORS
+
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+@app.route('/api/generate', methods=['POST'])
+def generate():
+	print('generate', request.files)
+	if 'video' not in request.files or 'face' not in request.files:
+		flash('No file part')
+		return redirect(request.url)
+	video = request.files['video']
+	image = request.files['face']
+	if video.filename == '':
+		flash('No image selected for uploading')
+		return redirect(request.url)
+	elif image.filename == '':
+		flash('No video selected for uploading')
+		return redirect(request.url)
+	else:
+		imagepath = secure_filename(image.filename)
+		videopath = secure_filename(video.filename)
+		outpath = secure_filename("output.mp4")
+		image.save(os.path.join(app.config['UPLOAD_FOLDER'], imagepath))
+		video.save(os.path.join(app.config['UPLOAD_FOLDER'], videopath))
+		#print('upload_video filename: ' + filename)
+		flash('Video successfully uploaded and displayed below')
+		multiprocessing.set_start_method('spawn')
+		print("------- allocate process --------")
+		p = multiprocessing.Process(target=task, args=(os.path.join(app.config['UPLOAD_FOLDER'], videopath), os.path.join(app.config['UPLOAD_FOLDER'], imagepath), os.path.join(app.config['UPLOAD_FOLDER'], outpath) ) )
+		print("------- start processs --------")
+		p.start()
+		#p.join()
+		return render_template('upload.html', filename=outpath)
 
 @app.route('/')
 def upload_form():
