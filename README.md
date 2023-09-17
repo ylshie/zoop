@@ -80,3 +80,12 @@ Our software uses a lot of third party libraries as well pre-trained models. The
 ## Documentation
 
 Read the [documenation](https://roop-ai.gitbook.io/roop) for a deep dive.
+
+## Installation
+
+1. Cannot uninstall 'blinker'. It is a distutils installed project and thus we cannot accurately determine which files belong to it which wouldlead to only a partial uninstall
+    => pip install --ignore-installed 
+    https://stackoverflow.com/questions/53807511/pip-cannot-uninstall-package-it-is-a-distutils-installed-project
+
+2. apt install python3-tk
+
