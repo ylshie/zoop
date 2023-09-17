@@ -23,17 +23,21 @@ def generate():
 	if 'video' not in request.files or 'face' not in request.files:
 		flash('No file part')
 		print('No file part')
-		return redirect(request.url)
+		d = {'status':"failed", 'error': "No file part"}
+		return jsonify(d)
 	video = request.files['video']
 	image = request.files['face']
 	if video.filename == '':
 		flash('No image selected for uploading')
 		print('No image selected for uploading')
-		return redirect(request.url)
+		d = {'status':"failed", 'error': "No image selected for uploading"}
+		return jsonify(d)
 	elif image.filename == '':
 		flash('No video selected for uploading')
 		print('No video selected for uploading')
-		return redirect(request.url)
+		#return redirect(request.url)
+		d = {'status':"failed", 'error': "No video selected for uploading"}
+		return jsonify(d)
 	else:
 		imagepath = secure_filename(image.filename)
 		videopath = secure_filename(video.filename)
@@ -68,7 +72,7 @@ def generate():
 			p = Process(target=loop, args=(q,) )
 			print("------- start processs --------")
 			p.start()
-		d = {'queue': q.qsize(),'filename': outpath}
+		d = {'status':"ok",'queue': q.qsize(),'filename': outpath}
 		return jsonify(d)
 		#p.join()
 		#return render_template('upload.html', filename=outpath)

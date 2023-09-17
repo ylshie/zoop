@@ -111,3 +111,4 @@ https://gist.github.com/denguir/b21aa66ae7fb1089655dd9de8351a202
 
 5. model
     
+https://trade3space.sgp1.cdn.digitaloceanspaces.com/roop/models/inswapper_128.onnx --output inswapper_128.onnx
