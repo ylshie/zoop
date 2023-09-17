@@ -1,0 +1,1 @@
+python run.py -t camio.mp4 -s target.jpeg -o swap.mp4 --execution-provider cuda --frame-processor face_swapper face_enhancer

@@ -81,11 +81,33 @@ Our software uses a lot of third party libraries as well pre-trained models. The
 
 Read the [documenation](https://roop-ai.gitbook.io/roop) for a deep dive.
 
+## Test
+python run.py --target /content/camio.mp4 --source ./target.jpeg -o /content/kiki-swap.mp4 --execution-provider cuda --frame-processor face_swapper face_enhancer
+
 ## Installation
 
-1. Cannot uninstall 'blinker'. It is a distutils installed project and thus we cannot accurately determine which files belong to it which wouldlead to only a partial uninstall
+https://gist.github.com/denguir/b21aa66ae7fb1089655dd9de8351a202
+
+1.  Cannot uninstall 'blinker'. It is a distutils installed project and thus we cannot accurately determine which files belong to it which wouldlead to only a partial uninstall
     => pip install --ignore-installed 
     https://stackoverflow.com/questions/53807511/pip-cannot-uninstall-package-it-is-a-distutils-installed-project
 
-2. apt install python3-tk
+2.  apt install python3-tk
 
+3.  apt install ffmpeg
+
+4.  curl https://trade3space.sgp1.cdn.digitaloceanspaces.com/roop/models/cudnn-local-repo-ubuntu2204-8.9.3.28_1.0-1_amd64.deb --output cudnn-local-repo-ubuntu2204-8.9.3.28_1.0-1_amd64.deb
+    https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#install-linux
+    cuda version: nvcc --version
+    8  nvcc --version
+    9  dpkg -i cudnn-local-repo-ubuntu2204-8.9.3.28_1.0-1_amd64.deb 
+   10  cp /var/cudnn-local-repo-ubuntu2204-8.9.3.28/cudnn-local-7F7A158C-keyring.gpg /usr/share/keyrings/
+   11  dpkg -i cudnn-local-repo-ubuntu2204-8.9.3.28_1.0-1_amd64.deb 
+   12  apt updatr
+   13  apt update
+   14  apt-get install libcudnn8=8.9.3.28-1+cuda11.8
+   15  apt-get install libcudnn8-dev=8.9.3.28-1+cuda11.8
+   16  apt-get install libcudnn8-samples=8.9.3.28-1+cuda11.8
+
+5. model
+    
